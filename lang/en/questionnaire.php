@@ -36,7 +36,7 @@ $string['all'] = 'All';
 $string['alreadyfilled'] = 'You have already filled out this questionnaire for us{$a}. Thank you.';
 $string['andaveragevalues'] = 'and average values';
 $string['anonymous'] = 'Anonymous';
-$string['answerquestions'] = 'Answer the questions...';
+$string['answerquestions'] = 'Answer the questions';
 $string['autonumbering'] = 'Auto numbering';
 $string['autonumbering_help'] = 'Automatic numbering of questions and pages. You might want to disable automatic numbering
  for questionnaires with conditional branching.';

@@ -139,7 +139,7 @@ class questionnaire {
         if (!$this->capabilities->view) {
             echo('<br/>');
             questionnaire_notify(get_string("guestsno", "questionnaire", $this->name));
-            echo('<div><a href="'.$CFG->wwwroot.'/course/view.php?id='.$this->course->id.'">'.
+            echo('<div><a class="btn" href="'.$CFG->wwwroot.'/course/view.php?id='.$this->course->id.'">'.
                 get_string("continue").'</a></div>');
             exit;
         }
@@ -147,19 +147,19 @@ class questionnaire {
         // Print the main part of the page.
 
         if (!$this->is_active()) {
-            echo '<div class="notifyproblem">'
+            echo '<div class="alert">'
             .get_string('notavail', 'questionnaire')
             .'</div>';
         } else if (!$this->is_open()) {
-                echo '<div class="notifyproblem">'
+                echo '<div class="alert">'
                 .get_string('notopen', 'questionnaire', userdate($this->opendate))
                 .'</div>';
         } else if ($this->is_closed()) {
-            echo '<div class="notifyproblem">'
+            echo '<div class="alert">'
             .get_string('closed', 'questionnaire', userdate($this->closedate))
             .'</div>';
         } else if (!$this->user_is_eligible($USER->id)) {
-            echo '<div class="notifyproblem">'
+            echo '<div class="alert">'
             .get_string('noteligible', 'questionnaire')
             .'</div>';
         } else if ($this->user_can_take($USER->id)) {
@@ -238,7 +238,7 @@ class questionnaire {
                     $msgstring = '';
                     break;
             }
-            echo ('<div class="notifyproblem">'.get_string("alreadyfilled", "questionnaire", $msgstring).'</div>');
+            echo ('<div class="alert">'.get_string("alreadyfilled", "questionnaire", $msgstring).'</div>');
         }
 
         // Finish the page.
@@ -805,7 +805,7 @@ class questionnaire {
         }
 
         if ($message) {
-            echo '<div class="notifyproblem">'.$message.'</div>';
+            echo '<div class="alert">'.$message.'</div>';
         }
     }
 
@@ -880,7 +880,7 @@ class questionnaire {
                     if ($numsections > 1) {
                         $pageerror = get_string('page', 'questionnaire').' '.$s.' : ';
                     }
-                    echo '<div class="notifyproblem">'.$pageerror.$errormessage.'</div>';
+                    echo '<div class="alert">'.$pageerror.$errormessage.'</div>';
                     $errors++;
                 }
                 $s ++;
@@ -897,7 +897,7 @@ class questionnaire {
                 $descendantsandchoices = questionnaire_get_descendants_and_choices($this->questions);
         }
         if ($errors == 0) {
-            echo '<div class="message">'.get_string('submitpreviewcorrect', 'questionnaire').'</div>';
+            echo '<div class="alert alert-info">'.get_string('submitpreviewcorrect', 'questionnaire').'</div>';
         }
 
         $page = 1;
@@ -2068,11 +2068,11 @@ class questionnaire {
                         $this->context->id, 'mod_questionnaire', 'thankbody', $this->survey->id), FORMAT_HTML);
         echo ($message);
         if ($this->capabilities->readownresponses) {
-            echo('<a href="'.$CFG->wwwroot.'/mod/questionnaire/myreport.php?id='.
+            echo('<a class="btn" href="'.$CFG->wwwroot.'/mod/questionnaire/myreport.php?id='.
             $this->cm->id.'&amp;instance='.$this->cm->instance.'&amp;user='.$USER->id.'&byresponse=0&action=vresp">'.
             get_string("continue").'</a>');
         } else {
-            echo('<a href="'.$CFG->wwwroot.'/course/view.php?id='.$this->course->id.'">'.
+            echo('<a class="btn" href="'.$CFG->wwwroot.'/course/view.php?id='.$this->course->id.'">'.
             get_string("continue").'</a>');
         }
         return;
