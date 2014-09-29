@@ -153,6 +153,17 @@ class restore_questionnaire_activity_structure_step extends restore_activity_str
         global $DB;
 
         $data = (object)$data;
+
+        // Replace the = separator with :: separator in quest_choice content.
+        require_once($CFG->dirroot.'/mod/questionnaire/locallib.php');
+
+        if (($data->value == null || $data->value == 'NULL') && !preg_match("/^([0-9]{1,3})=(.*)$/", $data->content)) {
+            $content = questionnaire_choice_values($data->content);
+            if ($pos = strpos($content->text, '=')) {
+                $data->content = str_replace('=', '::', $content->text);
+            }
+        }
+
         $oldid = $data->id;
         $data->section_id = $this->get_new_parentid('questionnaire_fb_sections');
 

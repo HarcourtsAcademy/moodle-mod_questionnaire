@@ -241,6 +241,8 @@ switch ($action) {
         }
 
         $rids = array_keys($resps);
+
+        // If more than one response for this respondent, display most recent response.
         if (!$rid) {
             // If more than one response for this respondent, display most recent response.
             $rid = end($rids);

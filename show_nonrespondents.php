@@ -389,6 +389,38 @@ if (!$nonrespondents) {
             if ($action == 'sendmessage' && !is_array($messageuser)) {
                 echo $OUTPUT->notification(get_string('nousersselected', 'questionnaire'));
             }
+        } else { // Anonymous questionnaire.
+            echo '<fieldset>';
+            echo '<legend>'.get_string('send_message_to', 'questionnaire').'</legend>';
+            $checked = ($selectedanonymous == '' || $selectedanonymous == 'none') ? 'checked = "checked"' : '';
+            echo '&nbsp;&nbsp;<input type="radio" name="selectedanonymous" value="none" id="none" '.$checked.' />
+                    <label for="none">'.get_string('none').'</label>';
+            $checked = ($selectedanonymous == 'all') ? 'checked = "checked"' : '';
+            echo '<input type="radio" name="selectedanonymous" value="all" id="nonrespondents" '.$checked.' />
+                    <label for="all">'.get_string('all', 'questionnaire').'</label>';
+            if ($resume) {
+                if ($countstarted > 0) {
+                    $checked = ($selectedanonymous == 'started') ? 'checked = "checked"' : '';
+                    echo '<input type="radio" name="selectedanonymous" value="started" id="started" '.$checked.' />
+                        <label for="started">'.get_string('status').': '.
+                            get_string('started', 'questionnaire').' ('.$countstarted.')</label>';
+                }
+                if ($countnotstarted > 0) {
+                    if ($selectedanonymous == 'notstarted') {
+                        $checked = 'checked = "checked"';
+                    } else {
+                        $checked = '';
+                    }
+                    $checked = ($selectedanonymous == 'notstarted') ? 'checked = "checked"' : '';
+                    echo '<input type="radio" name="selectedanonymous" value="notstarted" id="notstarted" '.$checked.' />
+                        <label for="notstarted">'.get_string('status').': '.
+                            get_string('not_started', 'questionnaire').' ('.$countnotstarted.')</label>';
+                }
+            }
+            if ($action == 'sendmessage' && $selectedanonymous == 'none') {
+                echo $OUTPUT->notification(get_string('nousersselected', 'questionnaire'));
+            }
+            echo '</fieldset>';
         }
     } else {// Anonymous questionnaire.
         if (has_capability('mod/questionnaire:message', $context)) {
