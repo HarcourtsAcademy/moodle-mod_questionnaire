@@ -781,5 +781,4 @@ switch ($action) {
 
         // Finish the page.
         echo $OUTPUT->footer($course);
-        break;
-}
+        break;}
