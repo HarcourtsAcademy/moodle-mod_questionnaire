@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Release Notes
 Version 2.8.2 (Build - 2015031901)
 CONTRIB-4838 - allow configuration of allowed fields for CSV download - security issue.
@@ -14,3 +15,8 @@ CONTRIB-5435 - Put back precision setting for text box questions.
 
 Version 2.8.0 (Build - 2014112000)
 Released 2.8 version based on 2.7 version.
+=======
+Release Notes
+Version 3.0.0 (Build Build - 2015102800)
+CONTRIB-5972 - replaced 'add_intro_editor. Fixed css.
+>>>>>>> b79b20e418d73ce7587eb731d50a6d443240f76d
