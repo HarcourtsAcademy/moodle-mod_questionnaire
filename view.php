@@ -92,24 +92,22 @@ if (!groups_is_member($currentgroupid, $USER->id)) {
     $currentgroupid = 0;
 }
 
-echo $OUTPUT->box_start('generalbox boxaligncenter boxwidthwide');
-
 if (!$questionnaire->is_active()) {
     if ($questionnaire->capabilities->manage) {
         $msg = 'removenotinuse';
     } else {
         $msg = 'notavail';
     }
-    echo '<div class="alert alert-info">'
+    echo '<div class="message">'
     .get_string($msg, 'questionnaire')
     .'</div>';
 
 } else if (!$questionnaire->is_open()) {
-    echo '<div class="alert alert-info">'
+    echo '<div class="message">'
     .get_string('notopen', 'questionnaire', userdate($questionnaire->opendate))
     .'</div>';
 } else if ($questionnaire->is_closed()) {
-    echo '<div class="alert alert-info">'
+    echo '<div class="message">'
     .get_string('closed', 'questionnaire', userdate($questionnaire->closedate))
     .'</div>';
 } else if ($questionnaire->survey->realm == 'template') {
@@ -119,7 +117,7 @@ if (!$questionnaire->is_active()) {
     exit();
 } else if (!$questionnaire->user_is_eligible($USER->id)) {
     if ($questionnaire->questions) {
-        echo '<div class="alert alert-info">'.get_string('noteligible', 'questionnaire').'</div>';
+        echo '<div class="message">'.get_string('noteligible', 'questionnaire').'</div>';
     }
 } else if (!$questionnaire->user_can_take($USER->id)) {
     switch ($questionnaire->qtype) {
@@ -136,7 +134,7 @@ if (!$questionnaire->is_active()) {
             $msgstring = '';
             break;
     }
-    echo ('<div class="alert alert-info">'.get_string("alreadyfilled", "questionnaire", $msgstring).'</div>');
+    echo ('<div class="message">'.get_string("alreadyfilled", "questionnaire", $msgstring).'</div>');
 } else if ($questionnaire->user_can_take($USER->id)) {
     $select = 'survey_id = '.$questionnaire->survey->id.' AND username = \''.$USER->id.'\' AND complete = \'n\'';
     $resume = $DB->get_record_select('questionnaire_response', $select, null) !== false;
@@ -146,7 +144,7 @@ if (!$questionnaire->is_active()) {
         $complete = get_string('resumesurvey', 'questionnaire');
     }
     if ($questionnaire->questions) { // Sanity check.
-        echo '<a class="btn" href="'.$CFG->wwwroot.htmlspecialchars('/mod/questionnaire/complete.php?'.
+        echo '<a href="'.$CFG->wwwroot.htmlspecialchars('/mod/questionnaire/complete.php?'.
         'id='.$questionnaire->cm->id.'&resume='.$resume).'">'.$complete.'</a>';
     }
 }
@@ -163,7 +161,7 @@ if (isguestuser()) {
     $guestno = html_writer::tag('p', get_string('noteligible', 'questionnaire'));
     $liketologin = html_writer::tag('p', get_string('liketologin'));
     $output .= $OUTPUT->confirm($guestno."\n\n".$liketologin."\n", get_login_url(),
-            get_referer(false));
+            get_local_referer(false));
     echo $output;
 }
 
